@@ -138,7 +138,7 @@ ax.set_frame_on(False)
 
 def daily_report_to_vk():
 
-    app_token = '6ceed695e050149c36b705006d51139XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+    app_token = '6ceed695e050149c36b705006d51139574adade15213093ceda7f5b2fe40f8f3a85e00d2ddad94a5fcb0c'
     vk_session = vk_api.VkApi(token=app_token)
     vk = vk_session.get_api()
 
@@ -161,12 +161,12 @@ def daily_report_to_telegram():
     message_telegram = f''' TOP_10 countries with the worst distribution dynamics of COVID-19 \n\n Report for: {today}\n\n
                     {top}'''
     # Send message to Telegram
-    token = '10756XXXX1:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+    token = '1075693341:AAENYAcHF5KewVM-xYl6xVkQu2sj9YFkHdo'
     # chat_id = 127585XXXX  # my chat id
 
     message = message_telegram  # message which I want to send
-    chats = [72854XXXX, 127585XXXX]
-    url_get = 'https://api.telegram.org/bot112711XXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/getUpdates'
+    chats = [728548581, 1275857904]
+    url_get = 'https://api.telegram.org/bot1127113079:AAFeKXAd0ZtO6J7VLKXUOzYEoAawQEVeSEk/getUpdates'
     response = requests.get(url_get)
 
     # Add new users

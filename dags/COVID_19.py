@@ -1,12 +1,10 @@
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
-from datetime import date
 import requests
 import pandas as pd
 import random
 import vk_api
-import json
 from urllib.parse import urlencode
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter

@@ -40,11 +40,11 @@ print('Data read')
 
 # Remove unnecessary columns
 covid_yesterday.drop(
-    ['FIPS', 'Admin2', 'Province_State', 'Last_Update', 'Lat', 'Long_', 'Combined_Key', 'Case-Fatality_Ratio',
-     'Incidence_Rate'], axis=1, inplace=True)
+    ['FIPS', 'Admin2', 'Province_State', 'Last_Update', 'Lat', 'Long_', 'Combined_Key', 'Case_Fatality_Ratio',
+     'Incident_Rate'], axis=1, inplace=True)
 covid_tdb_yesterday.drop(
-    ['FIPS', 'Admin2', 'Province_State', 'Last_Update', 'Lat', 'Long_', 'Combined_Key', 'Case-Fatality_Ratio',
-     'Incidence_Rate'], axis=1, inplace=True)
+    ['FIPS', 'Admin2', 'Province_State', 'Last_Update', 'Lat', 'Long_', 'Combined_Key', 'Case_Fatality_Ratio',
+     'Incident_Rate'], axis=1, inplace=True)
 
 # Grouping by country
 covid_yesterday = covid_yesterday \

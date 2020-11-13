@@ -144,7 +144,7 @@ def daily_report_to_vk():
     message_vk = f''' TOP_10 countries with the worst distribution dynamics of COVID \n\n Report for: {today}\n\n
                                 {top}'''
 
-#   Send message to VK
+    #   Send message to VK
     vk.messages.send(
             chat_id=1,
             random_id=random.randint(1, 2 ** 31),

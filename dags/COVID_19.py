@@ -21,7 +21,7 @@ default_args = {
 dag = DAG('daily_report_for_COVID_19',
           default_args=default_args,
           catchup=False,
-          schedule_interval='00 06,12 * * *')
+          schedule_interval='45 08,12 * * *')
 
 # Yesterday
 yesterday = datetime.strftime(datetime.now() - timedelta(1), '%m-%d-%Y')

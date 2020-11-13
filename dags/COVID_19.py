@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import requests
 import pandas as pd
 import random
-#import vk_api
+import vk_api
 from urllib.parse import urlencode
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
@@ -134,23 +134,23 @@ ax.set_frame_on(False)
 
 # Report to VK
 
-#def daily_report_to_vk():
+def daily_report_to_vk():
 
-#    app_token = '6ceed695e050149c36b705006d51139574adade15213093ceda7f5b2fe40f8f3a85e00d2ddad94a5fcb0c'
-#    vk_session = vk_api.VkApi(token=app_token)
-#    vk = vk_session.get_api()
+    app_token = '6ceed695e050149c36b705006d51139574adade15213093ceda7f5b2fe40f8f3a85e00d2ddad94a5fcb0c'
+    vk_session = vk_api.VkApi(token=app_token)
+    vk = vk_session.get_api()
 
     # Create message for VK
-#    message_vk = f''' TOP_10 countries with the worst distribution dynamics of COVID \n\n Report for: {today}\n\n
+    message_vk = f''' TOP_10 countries with the worst distribution dynamics of COVID \n\n Report for: {today}\n\n
                                 {top}'''
 
 #   Send message to VK
-#    vk.messages.send(
-#            chat_id=1,
-#            random_id=random.randint(1, 2 ** 31),
-#            message=message_vk
-#        )
-#    print('Report send')
+    vk.messages.send(
+            chat_id=1,
+            random_id=random.randint(1, 2 ** 31),
+            message=message_vk
+        )
+    print('Report send')
 
 # Report to Telegram
 

@@ -163,7 +163,7 @@ def daily_report_to_telegram():
     # chat_id = 127585XXXX  # my chat id
 
     message = message_telegram  # message which I want to send
-    chats = [728548581, 1275857904]
+    chats = [1275857904]
     url_get = 'https://api.telegram.org/bot1127113079:AAFeKXAd0ZtO6J7VLKXUOzYEoAawQEVeSEk/getUpdates'
     response = requests.get(url_get)
 

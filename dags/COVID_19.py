@@ -163,7 +163,7 @@ def daily_report_to_telegram():
 
     message = message_telegram  # message which I want to send
     chats = [1275857904]
-    url_get = 'https://api.telegram.org/bot1127113079:AAFeKXAd0ZtO6J7VLKXUOzYEoAawQEVeSEk/getUpdates'
+    url_get = 'https://api.telegram.org/bot1075693341:AAENYAcHF5KewVM-xYl6xVkQu2sj9YFkHdo/getUpdates'
     response = requests.get(url_get)
 
     # Add new users

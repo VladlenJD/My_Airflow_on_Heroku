@@ -4,11 +4,11 @@ from datetime import datetime, timedelta
 import requests
 import pandas as pd
 import random
-import vk_api
+#import vk_api
 from urllib.parse import urlencode
-import matplotlib.pyplot as plt
-from matplotlib.ticker import FuncFormatter
-import seaborn as sns
+#import matplotlib.pyplot as plt
+#from matplotlib.ticker import FuncFormatter
+#import seaborn as sns
 
 
 default_args = {
@@ -86,71 +86,71 @@ print('Data transform')
 
 # Read timeseries_confirmed_global
 
-confirmed = pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv')
+#confirmed = pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv')
 
 # Let's take the last 2 weeks
-confirmed_by_days = confirmed[confirmed.columns[-15:]]
+#confirmed_by_days = confirmed[confirmed.columns[-15:]]
 
 # Beautiful charts settings
 
-plt.style.use('ggplot')                       # Красивые графики
-plt.rcParams['figure.figsize'] = (30, 20)
+#plt.style.use('ggplot')                       # Красивые графики
+#plt.rcParams['figure.figsize'] = (30, 20)
 
 # Dataframe for vizualization
 
-viz = confirmed_by_days.sum().to_frame('confirmed_viz').reset_index(drop=False)
-viz = viz.rename(columns={'index': 'date'})
-vizual = pd.DataFrame({'date': viz.date, 'confirmed_count': viz.confirmed_viz - viz.confirmed_viz.shift(1)})
-vizual.drop(0, inplace=True)
-vizual.date = pd.to_datetime(vizual.date)
-vizual['date'] = vizual['date'].dt.strftime('%d-%b')
+#viz = confirmed_by_days.sum().to_frame('confirmed_viz').reset_index(drop=False)
+#viz = viz.rename(columns={'index': 'date'})
+#vizual = pd.DataFrame({'date': viz.date, 'confirmed_count': viz.confirmed_viz - viz.confirmed_viz.shift(1)})
+#vizual.drop(0, inplace=True)
+#vizual.date = pd.to_datetime(vizual.date)
+#vizual['date'] = vizual['date'].dt.strftime('%d-%b')
 
 
-fig = plt.figure()
-fig.patch.set_facecolor('#CCFFFF')
-plt.title('Growth by World', fontsize=100, pad=60)
+#fig = plt.figure()
+#fig.patch.set_facecolor('#CCFFFF')
+#plt.title('Growth by World', fontsize=100, pad=60)
 
 # Building a barplot
 
-ax = sns.barplot(x = vizual.date, y = 'confirmed_count', data = vizual, palette='ch:s=-.2,r=.6')
+#ax = sns.barplot(x = vizual.date, y = 'confirmed_count', data = vizual, palette='ch:s=-.2,r=.6')
 
-plt.subplots_adjust(left=0.10, right=0.95, hspace=0.25, wspace=0.35)
+#plt.subplots_adjust(left=0.10, right=0.95, hspace=0.25, wspace=0.35)
 
-plt.xlabel('Daily Cases', fontsize=80, labelpad=50)
-plt.ylabel('Confirmed', fontsize=60, labelpad=30)
+#plt.xlabel('Daily Cases', fontsize=80, labelpad=50)
+#plt.ylabel('Confirmed', fontsize=60, labelpad=30)
 
-plt.xticks(fontsize=30)
-plt.yticks(fontsize=30)
+#plt.xticks(fontsize=30)
+#plt.yticks(fontsize=30)
 
-ax.yaxis.set_major_formatter(FuncFormatter(lambda y, p: '{:,g}k'.format(y/1000)))
+#ax.yaxis.set_major_formatter(FuncFormatter(lambda y, p: '{:,g}k'.format(y/1000)))
 
 
-ax.set_facecolor('#CCFFFF')
-ax.grid(color='grey', linewidth=2, linestyle='--')
+#ax.set_facecolor('#CCFFFF')
+#ax.grid(color='grey', linewidth=2, linestyle='--')
 
-fig.savefig('Add_Confirmed', facecolor=fig.get_facecolor())
+#fig.savefig('Add_Confirmed', facecolor=fig.get_facecolor())
 
-ax.set_frame_on(False)
+#ax.set_frame_on(False)
 
 # Report to VK
 
-def daily_report_to_vk():
+#def daily_report_to_vk():
 
-    app_token = '6ceed695e050149c36b705006d51139574adade15213093ceda7f5b2fe40f8f3a85e00d2ddad94a5fcb0c'
-    vk_session = vk_api.VkApi(token=app_token)
-    vk = vk_session.get_api()
+#    app_token = '6ceed695e050149c36b705006d51139574adade15213093ceda7f5b2fe40f8f3a85e00d2ddad94a5fcb0c'
+#    vk_session = vk_api.VkApi(token=app_token)
+#    vk = vk_session.get_api()
 
     # Create message for VK
-    message_vk = f''' TOP_10 countries with the worst distribution dynamics of COVID \n\n Report for: {today}\n\n
-                                {top}'''
+#    message_vk = f''' TOP_10 countries with the worst distribution dynamics of COVID \n\n Report for: {today}\n\n
+#                                {top}'''
 
     #   Send message to VK
-    vk.messages.send(
-            chat_id=1,
-            random_id=random.randint(1, 2 ** 31),
-            message=message_vk
-        )
-    print('Report send')
+#    vk.messages.send(
+#            chat_id=1,
+#            random_id=random.randint(1, 2 ** 31),
+#            message=message_vk
+#        )
+#    print('Report send')
 
 # Report to Telegram
 
@@ -195,17 +195,18 @@ def daily_report_to_telegram():
         base_url = f'https://api.telegram.org/bot{token}/'
         url = base_url + 'sendMessage?' + urlencode(params)
 
-        url_photo = base_url + 'sendPhoto'
+        #url_photo = base_url + 'sendPhoto'
 
-        files = {'photo': open('Add_Confirmed.png', 'rb')}
-        data = {'chat_id': chat}
+        #files = {'photo': open('Add_Confirmed.png', 'rb')}
+       # data = {'chat_id': chat}
 
         resp = requests.get(url)
-        r = requests.post(url_photo, files=files, data=data)
+        #r = requests.post(url_photo, files=files, data=data)
     print('Report send')
 
 
-t1 = PythonOperator(task_id='report_to_vk', python_callable=daily_report_to_vk, dag=dag)
+#t1 = PythonOperator(task_id='report_to_vk', python_callable=daily_report_to_vk, dag=dag)
 t2 = PythonOperator(task_id='report_to_telegram', python_callable=daily_report_to_telegram, dag=dag)
 
-t1 >> t2
+#t1 >> t2
+t2

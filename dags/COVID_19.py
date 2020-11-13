@@ -156,8 +156,7 @@ print('Data transform')
 
 def daily_report_to_telegram():
     # Create message for Telegram
-    message_telegram = f''' TOP_10 countries with the worst distribution dynamics of COVID-19 \n\n Report for: {today}\n\n
-                    {top}'''
+    message_telegram = f''' TOP_10 countries with the worst distribution dynamics of COVID-19 \n\n Report for: {today}\n\n{top}'''
     # Send message to Telegram
     token = '1075693341:AAENYAcHF5KewVM-xYl6xVkQu2sj9YFkHdo'
     # chat_id = 127585XXXX  # my chat id

@@ -9,6 +9,8 @@ from urllib.parse import urlencode
 #import matplotlib.pyplot as plt
 #from matplotlib.ticker import FuncFormatter
 #import seaborn as sns
+import os
+import psycopg2
 
 
 default_args = {
@@ -76,10 +78,10 @@ TOP_10 = covid_progress.sort_values(['Confirmed_add', 'Recovered_add', 'Deaths_a
                                     ascending=False).head(10)
 TOP_10 = TOP_10.rename(columns={'Country_Region': 'Country'})
 TOP_10.reset_index(drop=True, inplace=True)
-TOP_10.set_index('Country', inplace=True)
+#TOP_10.set_index('Country', inplace=True)
 
 # Create a variable 'top' for mailing to VK and Telegram
-top = TOP_10.rename(columns={'Confirmed_add': 'Growth'})['Growth'].to_csv(sep='➨')
+top = TOP_10.rename(columns={'Confirmed_add': 'Growth'})[['Country', 'Growth']].to_csv(sep='➨', index=False)
 
 today = datetime.strftime(datetime.now() - timedelta(1), '%d-%m-%Y')
 print('Data transform')
@@ -156,13 +158,12 @@ print('Data transform')
 
 def daily_report_to_telegram():
     # Create message for Telegram
-    message_telegram = f''' TOP_10 countries with the worst distribution dynamics of COVID-19 \n\n Report for: {today}\n\n{top}'''
+    message_telegram = f''' TOP_10 countries with the worst distribution dynamics of COVID-19 \n\nReport for: {today}\n\n{top}'''
     # Send message to Telegram
     token = '1075693341:AAENYAcHF5KewVM-xYl6xVkQu2sj9YFkHdo'
     # chat_id = 127585XXXX  # my chat id
 
     message = message_telegram  # message which I want to send
-    chats = [1275857904]
     url_get = 'https://api.telegram.org/bot1075693341:AAENYAcHF5KewVM-xYl6xVkQu2sj9YFkHdo/getUpdates'
     response = requests.get(url_get)
 
@@ -170,24 +171,44 @@ def daily_report_to_telegram():
     new_chats = []
     if len(response.json()['result']) != 0:
         for i in response.json()['result']:
-            if i['message']['chat']['id'] not in new_chats:
-                new_chats.append(i['message']['chat']['id'])
-    try:
-        with open('CHATS_C', 'r') as f:
-            for line in f:
-                chats.append(int(line.strip()))
-        with open('CHATS_C', 'a') as f:
-            for c in new_chats:
-                if c not in chats:
-                    chats.append(c)
-                    f.write(str(c) + '\n')
-    except:
-        with open('CHATS_C', 'w') as f:
-            for c in new_chats:
-                if c not in chats:
-                    chats.append(c)
-                    f.write(str(c) + '\n')
-                
+            if int(i['message']['chat']['id']) not in new_chats:
+                new_chats.append(int(i['message']['chat']['id']))
+    # try:
+    #     with open('CHATS_C', 'r') as f:
+    #         for line in f:
+    #             chats.append(int(line.strip()))
+    #     with open('CHATS_C', 'a') as f:
+    #         for c in new_chats:
+    #             if c not in chats:
+    #                 chats.append(c)
+    #                 f.write(str(c) + '\n')
+    # except:
+    #     with open('CHATS_C', 'w') as f:
+    #         for c in new_chats:
+    #             if c not in chats:
+    #                 chats.append(c)
+    #                 f.write(str(c) + '\n')
+
+    DATABASE_URL = os.environ['DATABASE_URL']
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM bots_users.covid")
+    rows = cur.fetchall()
+    conn.close()
+
+    chats = [int(i) for sub in rows for i in sub]
+
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur = conn.cursor()
+
+    for c in new_chats:
+        if c not in chats:
+            chats.append(c)
+            cur.execute(f"INSERT INTO bots_users.covid (chat_id) VALUES ({c})")
+    conn.commit()
+    conn.close()
+
     for chat in chats:
         params = {'chat_id': chat, 'text': message}
 
@@ -197,7 +218,7 @@ def daily_report_to_telegram():
         #url_photo = base_url + 'sendPhoto'
 
         #files = {'photo': open('Add_Confirmed.png', 'rb')}
-       # data = {'chat_id': chat}
+        # data = {'chat_id': chat}
 
         resp = requests.get(url)
         #r = requests.post(url_photo, files=files, data=data)

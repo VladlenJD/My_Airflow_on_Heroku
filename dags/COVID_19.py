@@ -119,15 +119,16 @@ def daily_report_to_telegram():
 
     chats = [int(i) for sub in rows for i in sub]
 
-    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-    cur = conn.cursor()
+    if len(new_chats) != 0:
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+        cur = conn.cursor()
 
-    for c in new_chats:
-        if c not in chats:
-            chats.append(c)
-            cur.execute(f"INSERT INTO bots_users.covid (chat_id) VALUES ({c})")
-    conn.commit()
-    conn.close()
+        for c in new_chats:
+            if c not in chats:
+                chats.append(c)
+                cur.execute(f"INSERT INTO bots_users.covid (chat_id) VALUES ({c})")
+        conn.commit()
+        conn.close()
 
     for chat in chats:
         params = {'chat_id': chat, 'text': message}

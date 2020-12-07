@@ -95,11 +95,11 @@ def daily_report_to_telegram():
     # Create message for Telegram
     message_telegram = f''' TOP_10 countries with the worst distribution dynamics of COVID-19 \n\nReport for: {today}\n\n{top}'''
     # Send message to Telegram
-    token = '1075693341:AAENYAcHF5KewVM-xYl6xVkQu2sj9YFkHdo'
+    token = '1488870824:AAEI-SDeHqyUAkL0mYs4yw6NHWq2PXNZTnc'
     # chat_id = 127585XXXX  # my chat id
 
     message = message_telegram  # message which I want to send
-    url_get = 'https://api.telegram.org/bot1075693341:AAENYAcHF5KewVM-xYl6xVkQu2sj9YFkHdo/getUpdates'
+    url_get = 'https://api.telegram.org/bot1488870824:AAEI-SDeHqyUAkL0mYs4yw6NHWq2PXNZTnc/getUpdates'
     response = requests.get(url_get)
 
     # Add new users

@@ -19,7 +19,7 @@ default_args = {
 dag = DAG('daily_report_for_COVID_19',
           default_args=default_args,
           catchup=False,
-          schedule_interval='50 05 * * *')
+          schedule_interval='55 05 * * *')
 
 # Yesterday
 
